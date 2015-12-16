@@ -1,5 +1,4 @@
 /*** Work in Progress
-	Getting New Id for task and status
 	dragging status and task
 	if possible - height of the li
 ***/
@@ -89,11 +88,11 @@ $(document).ready(function(){
 		}
 	})
 
-	$(classItems.addTaskInput).keypress(function(event){
+	$(document).on('keypress', classItems.addTaskInput, function(event){
 		if(event.keyCode == 13) $(window).trigger("saveTask", $(this));
 	});
 
-	$(classItems.addTaskButton).click(function(){
+	$(document).on('click', classItems.addTaskButton, function(){
 		$(this).closest("div.add-task").find("input");
 		var newEle = $(this).closest("div.add-task").find("input");
 		console.log(newEle);
