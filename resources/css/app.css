@@ -79,6 +79,7 @@ div.tasks ul.tasks-ul li {
 	margin-bottom: 1em;
 	background: #FFFFFF;
 	text-align: left;
+	box-shadow: 1px 1px 5px #dddddd;
 }
 div.add-task {
 	width: 90%;
@@ -111,4 +112,19 @@ div.add-task span button {
 	background: #008b8b;
 	color: #FFFFFF;
 	border-radius: 0.5em;
+}
+div.delete-item {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	background: #FFFFFF;
+	padding: 0.5em;
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+div.delete-item i {
+	font-size: 1.5em;
+	color: #FF0000;
 }

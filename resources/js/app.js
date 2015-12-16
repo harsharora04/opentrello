@@ -10,6 +10,7 @@ var initialObject = [
 		"position": "1", 
 		"tasks": [
 			{
+				"id": "1",
 				"name": "Task 1",
 				"position": "1"
 			}
@@ -20,7 +21,8 @@ var initialObject = [
 		"name": "In Progress", 
 		"position": "3",
 		"tasks": [
-			{
+			{	
+				"id": "2",
 				"name": "Task 1",
 				"position": "1"
 			}
@@ -32,6 +34,7 @@ var initialObject = [
 		"position": "4",
 		"tasks": [
 			{
+				"id": "3",
 				"name": "Task 1",
 				"position": "1"
 			}
@@ -43,6 +46,7 @@ var initialObject = [
 		"position": "2",
 		"tasks": [
 			{
+				"id": "4",
 				"name": "Task",
 				"position": "1"
 			}
@@ -50,8 +54,8 @@ var initialObject = [
 	}
 ];
 $(document).ready(function(){
-	if(!localStorage.getItem('intalled')) {
-		localStorage.setItem('installed',true);
+	if(!localStorage.getItem('items')) {
+		localStorage.setItem('installed',1);
 		localStorage.setItem('items',  JSON.stringify(initialObject));
 	}
 	createItems();
@@ -82,6 +86,9 @@ function Status(name) {
 	this.createNew = function() {
 		$(window).trigger('createNewStatus', this.name);
 	}
+	this.deleteStatus = function() {
+		$(window).trigger('deleteStatus');
+	}
 }
 
 $(window).on("createNewStatus", function(event, name) {
@@ -91,6 +98,16 @@ $(window).on("createNewStatus", function(event, name) {
 	newHtml = newHtml + '</ul></div>';
 	newHtml = newHtml + '<div class="add-task"><form><input type="text" /><span><button>add task</button></span></form></div></section>';
 	$(classItems.wrapper).prepend(newHtml);
+	var a = [];
+	var data = {
+		"id": "5",
+		"name": name,
+		"position": "1",
+		"tasks": []
+	};
+    a = JSON.parse(localStorage.getItem('items'));
+    a.push(data);
+	localStorage.setItem('items',  JSON.stringify(a));
 })
 
 function handleDragStart(ev) {
@@ -101,7 +118,6 @@ function handleDragStart(ev) {
 
 function handleDragEnter(ev) {
 	console.log("Drag enter");
-	ev.currentTarget.style.background = "yellow";
 }
 
 function handleDragOver(ev) {
@@ -120,20 +136,13 @@ function handleDragEnd(ev) {
 }
 
 function handleDragDrop(ev) {
-	var data = ev.dataTransfer.getData("text");
-  	ev.target.textContent = data;
-  	ev.preventDefault();
 }
 
 function createItems() {
 	var items = JSON.parse(localStorage.getItem('items'));
 	//Sorting According to the array
-	items.sort(function(a,b){
-    return a.position - b.position;
-    	}
-	);
 	items.forEach(function(elements){
-		var newHtml = '<section id='+elements.id+'><header><span>'+elements.name+'</span></header>';
+		var newHtml = '<section draggable=true id='+elements.id+'><header><span>'+elements.name+'</span></header>';
 		newHtml = newHtml + '<div class="tasks"><ul class="tasks-ul" ondragover="return false">';
 		elements.tasks.sort(function(a,b){
 			return a.position - b.position;
