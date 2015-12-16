@@ -57,6 +57,7 @@ body > header button {
 	border-radius: 4px;
 	vertical-align: top;
 	margin: 0 0.5em;
+	position: relative;
 }
 .wrapper section header {
 	padding: 0.5em;
@@ -140,4 +141,16 @@ div.delete-item i {
 	font-size: 1.5em;
 	color: #da6665;
 	margin-top: -2px;
+}
+span.status-action {
+	position: absolute;
+	right: 0;
+	width: 25px;
+	height: 25px;
+	margin-right: -13px;
+	margin-top: -13px;
+	border-radius: 50%;
+	line-height: 25px;
+	background: #555555;
+	color: #ffffff !important;
 }

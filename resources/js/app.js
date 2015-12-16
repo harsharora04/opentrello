@@ -1,8 +1,6 @@
 /*** Work in Progress
 	Getting New Id for task and status
 	dragging status and task
-	adding task
-	deleting status and task
 	if possible - height of the li
 ***/
 
@@ -12,6 +10,7 @@ var classItems = {
 	addTaskInput: '.add-task input',
 	addTaskButton: '.add-task button',
 	deleteStatusTaskButton: '.task-action button',
+	deleteStatusButton: '.status-action',
 }
 
 var initialObject = [
@@ -81,8 +80,8 @@ $(document).ready(function(){
 		dT.addEventListener('dragend', handleDragEnd, false);
 		dT.addEventListener('drop', handleDragDrop, false);
 	})
-	
-	$(classItems.addLane).click(function(){
+
+	$(document).on('click',classItems.addLane, function(){
 		var text = prompt("Add New Lane", "");
 		if (text != null) {
 			var lane = new Status(text);
@@ -104,7 +103,20 @@ $(document).ready(function(){
 		newEle.trigger(e);
 	})
 
-	$(classItems.deleteStatusTaskButton).click(function(){
+	$(document).on('click', classItems.deleteStatusButton, function(){
+		var statusid = $(this).data("statusid");
+		var items = JSON.parse(localStorage.getItem("items"));
+		for (var i = 0; i < items.length; i++) {
+			if (items[i].id == statusid) {
+				items.splice(i, 1);
+				break;
+			}
+		}
+		$("#"+statusid).remove();
+		localStorage.setItem("items", JSON.stringify(items));
+	})
+
+	$(document).on('click', classItems.deleteStatusTaskButton, function(){
 		var id = $(this).data("id");
 		var statusid = $(this).data("statusid");
 		var items = JSON.parse(localStorage.getItem('items'));
@@ -138,11 +150,39 @@ $(window).on("deleteTask", function(event, element){
 
 });
 
+function getMaxStatus() {
+	var max = 0;
+	var array = JSON.parse(localStorage.getItem("items"));
+	for(var i = 0; i < array.length; i++) {
+		if (max < array[i].id) {
+			max = array[i].id;
+		}
+	}
+	++max;
+	return max;
+}
+
+function getMaxTask() {
+	var max = 0;
+	var array = JSON.parse(localStorage.getItem("items"));
+	for (var i = 0; i < array.length; i++) {
+		var newArray = array[i].tasks;
+		for (var j = 0; j < newArray.length; j++) {
+			if (max < newArray[j].id) {
+				max = newArray[j].id;
+			}
+		}
+	}
+	++max;
+	return max;
+}
+
 $(window).on("saveTask", function(event, element){
-	if (element.value.trim() == null) return;
+	var newId = getMaxTask();
+	if (element.value.trim() == "") return false;
 	var id = $(element).data("id");
 	var data = {
-		"id": "6",
+		"id": newId,
 		"name": element.value,
 		"position": "6"
 	}
@@ -153,22 +193,22 @@ $(window).on("saveTask", function(event, element){
 			break;
 		}
 	}
-	var newHTML = '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.value+'</span><span class="task-action"><button class="fa fa-times" data-id='+element.id+'></button></span></li>';
+	var newHTML = '<li id="task-'+newId+'" class="task" draggable="true"><span>'+element.value+'</span><span class="task-action"><button class="fa fa-times" data-id='+element.id+'></button></span></li>';
 	$('#'+id+' div.tasks ul.tasks-ul').append(newHTML);
 	localStorage.setItem('items', JSON.stringify(items));
 	element.value = '';
 });
 
 $(window).on("createNewStatus", function(event, name) {
-	// var id = Math.max.apply(Math.items.map(function(o){return o.y;}))
-	var newHtml = '<section id='+5+'><header><span>'+name+'</span></header>';
+	var id = getMaxStatus() + 1;
+	var newHtml = '<section draggable=true id='+id+'><header><span class="status-action" data-statusid='+id+'><i class="fa fa-times"></i></span><span>'+name+'</span></header>';
 	newHtml = newHtml + '<div class="tasks"><ul class="tasks-ul" ondragover="return false">';
 	newHtml = newHtml + '</ul></div>';
 	newHtml = newHtml + '<div class="add-task"><input type="text" /><span><button>add task</button></span></div></section>';
 	$(classItems.wrapper).prepend(newHtml);
 	var a = [];
 	var data = {
-		"id": "5",
+		"id": id,
 		"name": name,
 		"position": "1",
 		"tasks": []
@@ -216,11 +256,8 @@ function createItems() {
 	var items = JSON.parse(localStorage.getItem('items'));
 	//Sorting According to the array
 	items.forEach(function(elements){
-		var newHtml = '<section draggable=true id='+elements.id+'><header><span>'+elements.name+'</span></header>';
+		var newHtml = '<section draggable=true id='+elements.id+'><header><span class="status-action" data-statusid='+elements.id+'><i class="fa fa-times"></i></span><span>'+elements.name+'</span></header>';
 		newHtml = newHtml + '<div class="tasks"><ul class="tasks-ul" ondragover="return false">';
-		elements.tasks.sort(function(a,b){
-			return a.position - b.position;
-		})
 		elements.tasks.forEach(function(element){
 			newHtml = newHtml + '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.name+'</span><span class="task-action"><button class="fa fa-times" data-statusid='+elements.id+' data-id='+element.id+'></button></span></li>';
 		});
