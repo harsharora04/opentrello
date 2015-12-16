@@ -203,7 +203,7 @@ $(window).on("createNewStatus", function(event, name) {
 	var newHtml = '<section draggable=true id='+id+'><header><span class="status-action" data-statusid='+id+'><i class="fa fa-times"></i></span><span>'+name+'</span></header>';
 	newHtml = newHtml + '<div class="tasks"><ul class="tasks-ul" ondragover="return false">';
 	newHtml = newHtml + '</ul></div>';
-	newHtml = newHtml + '<div class="add-task"><input data-id='+id+' type="text" /><span><button data-id='+id+'>add task</button></span></div></section>';
+	newHtml = newHtml + '<div class="add-task"><input placeholder="add task here..." data-id='+id+' type="text" /><span><button data-id='+id+'>add task</button></span></div></section>';
 	$(classItems.wrapper).prepend(newHtml);
 	var a = [];
 	var data = {
@@ -261,7 +261,7 @@ function createItems() {
 			newHtml = newHtml + '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.name+'</span><span class="task-action"><button class="fa fa-times" data-statusid='+elements.id+' data-id='+element.id+'></button></span></li>';
 		});
 		newHtml = newHtml + '</ul></div>';
-		newHtml = newHtml + '<div class="add-task"><input data-id='+elements.id+' type="text" /><span><button data-id='+elements.id+'>add task</button></span></div></section>';
+		newHtml = newHtml + '<div class="add-task"><input placeholder="add task here..." data-id='+elements.id+' type="text" /><span><button data-id='+elements.id+'>add task</button></span></div></section>';
 		$(classItems.wrapper).prepend(newHtml);
 	});
 }

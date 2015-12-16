@@ -105,6 +105,7 @@ div.add-task {
 div.add-task input {
 	width: 95%;
 	padding: 0;
+	text-indent: 0.5em;
 	box-shadow: none;
 	border:0;
 	height: 30px;
