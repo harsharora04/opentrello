@@ -126,5 +126,6 @@ div.delete-item {
 }
 div.delete-item i {
 	font-size: 1.5em;
-	color: #FF0000;
+	color: #da6665;
+	margin-top: -2px;
 }

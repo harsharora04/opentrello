@@ -1,6 +1,16 @@
+/*** Work in Progress
+	Getting New Id for task and status
+	dragging status and task
+	adding task
+	deleting status and task
+	if possible - height of the li
+***/
+
 var classItems = {
 	wrapper: '.wrapper',
 	addLane: '.button-add-lane',
+	addTaskInput: '.add-task input',
+	addTaskButton: '.add-task button',
 }
 
 var initialObject = [
@@ -78,6 +88,13 @@ $(document).ready(function(){
 			lane.createNew();
 		}
 	})
+
+	$(classItems.addTaskInput).keypress(function(event){
+		if(event.keyCode == 13) $(window).trigger("saveTask", $(this));
+	})
+	$(classItems.addTaskButton).click(function(){
+		$(window).trigger("saveTask", $(this).data("id"), $(this));
+	})
 });
 
 
@@ -91,12 +108,32 @@ function Status(name) {
 	}
 }
 
+$(window).on("saveTask", function(event, element){
+	var id = $(element).data("id");
+	var data = {
+		"id": "6",
+		"name": element.value,
+		"position": "6"
+	}
+	var items = JSON.parse(localStorage.getItem('items'));
+	for (var i = 0; i < items.length; i++) {
+		if(items[i].id == id) {
+			items[i].tasks.push(data);
+			break;
+		}
+	}
+	var newHTML = '<li class="task" draggable="true">'+element.value+'</li>';
+	$('#'+id+' div.tasks ul.tasks-ul').append(newHTML);
+	localStorage.setItem('items', JSON.stringify(items));
+	element.value = '';
+});
+
 $(window).on("createNewStatus", function(event, name) {
 	// var id = Math.max.apply(Math.items.map(function(o){return o.y;}))
 	var newHtml = '<section id='+5+'><header><span>'+name+'</span></header>';
 	newHtml = newHtml + '<div class="tasks"><ul class="tasks-ul" ondragover="return false">';
 	newHtml = newHtml + '</ul></div>';
-	newHtml = newHtml + '<div class="add-task"><form><input type="text" /><span><button>add task</button></span></form></div></section>';
+	newHtml = newHtml + '<div class="add-task"><input type="text" /><span><button>add task</button></span></div></section>';
 	$(classItems.wrapper).prepend(newHtml);
 	var a = [];
 	var data = {
@@ -151,7 +188,7 @@ function createItems() {
 			newHtml = newHtml + '<li class="task" draggable="true">'+element.name+'</li>';
 		});
 		newHtml = newHtml + '</ul></div>';
-		newHtml = newHtml + '<div class="add-task"><form><input type="text" /><span><button>add task</button></span></form></div></section>';
+		newHtml = newHtml + '<div class="add-task"><input data-id='+elements.id+' type="text" /><span><button data-id='+elements.id+'>add task</button></span></div></section>';
 		$(classItems.wrapper).prepend(newHtml);
 	});
 }
