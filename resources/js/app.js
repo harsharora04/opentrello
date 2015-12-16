@@ -11,6 +11,7 @@ var classItems = {
 	addLane: '.button-add-lane',
 	addTaskInput: '.add-task input',
 	addTaskButton: '.add-task button',
+	deleteStatusTaskButton: '.task-action button',
 }
 
 var initialObject = [
@@ -91,9 +92,35 @@ $(document).ready(function(){
 
 	$(classItems.addTaskInput).keypress(function(event){
 		if(event.keyCode == 13) $(window).trigger("saveTask", $(this));
-	})
+	});
+
 	$(classItems.addTaskButton).click(function(){
-		$(window).trigger("saveTask", $(this).data("id"), $(this));
+		$(this).closest("div.add-task").find("input");
+		var newEle = $(this).closest("div.add-task").find("input");
+		console.log(newEle);
+		var e = jQuery.Event("keypress");
+		e.which = 13;
+		e.keyCode = 13;
+		newEle.trigger(e);
+	})
+
+	$(classItems.deleteStatusTaskButton).click(function(){
+		var id = $(this).data("id");
+		var statusid = $(this).data("statusid");
+		var items = JSON.parse(localStorage.getItem('items'));
+		for (var i = 0; i < items.length; i++) {
+			if(items[i].id == statusid) {
+				for(var j = 0; j < items[i].tasks.length; j++) {
+					if(items[i].tasks[j].id == id) {
+						console.log('i '+i+' j '+j);
+						items[i].tasks.splice(j, 1);
+						break;
+					}
+				}
+			}
+		}
+		console.log(items);
+		localStorage.setItem("items", JSON.stringify(items));
 	})
 });
 
@@ -108,7 +135,12 @@ function Status(name) {
 	}
 }
 
+$(window).on("deleteTask", function(event, element){
+
+});
+
 $(window).on("saveTask", function(event, element){
+	if (element.value.trim() == null) return;
 	var id = $(element).data("id");
 	var data = {
 		"id": "6",
@@ -185,7 +217,7 @@ function createItems() {
 			return a.position - b.position;
 		})
 		elements.tasks.forEach(function(element){
-			newHtml = newHtml + '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.name+'</span><span class="task-action"><button class="fa fa-times" data-id='+element.id+'></button></span></li>';
+			newHtml = newHtml + '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.name+'</span><span class="task-action"><button class="fa fa-times" data-statusid='+elements.id+' data-id='+element.id+'></button></span></li>';
 		});
 		newHtml = newHtml + '</ul></div>';
 		newHtml = newHtml + '<div class="add-task"><input data-id='+elements.id+' type="text" /><span><button data-id='+elements.id+'>add task</button></span></div></section>';
