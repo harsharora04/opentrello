@@ -193,18 +193,18 @@ $(window).on("saveTask", function(event, element){
 			break;
 		}
 	}
-	var newHTML = '<li id="task-'+newId+'" class="task" draggable="true"><span>'+element.value+'</span><span class="task-action"><button class="fa fa-times" data-id='+element.id+'></button></span></li>';
+	var newHTML = '<li id="task-'+newId+'" class="task" draggable="true"><span>'+element.value+'</span><span class="task-action"><button class="fa fa-times" data-statusid='+id+' data-id='+newId+'></button></span></li>';
 	$('#'+id+' div.tasks ul.tasks-ul').append(newHTML);
 	localStorage.setItem('items', JSON.stringify(items));
 	element.value = '';
 });
 
 $(window).on("createNewStatus", function(event, name) {
-	var id = getMaxStatus() + 1;
+	var id = getMaxStatus();
 	var newHtml = '<section draggable=true id='+id+'><header><span class="status-action" data-statusid='+id+'><i class="fa fa-times"></i></span><span>'+name+'</span></header>';
 	newHtml = newHtml + '<div class="tasks"><ul class="tasks-ul" ondragover="return false">';
 	newHtml = newHtml + '</ul></div>';
-	newHtml = newHtml + '<div class="add-task"><input type="text" /><span><button>add task</button></span></div></section>';
+	newHtml = newHtml + '<div class="add-task"><input data-id='+id+' type="text" /><span><button data-id='+id+'>add task</button></span></div></section>';
 	$(classItems.wrapper).prepend(newHtml);
 	var a = [];
 	var data = {
