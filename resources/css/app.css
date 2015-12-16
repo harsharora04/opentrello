@@ -1,0 +1,114 @@
+* {
+	font-family: Helvetica, sans-serif;
+	font-size: 13px;
+}
+html, body {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0;
+	background: #999999;
+	overflow: hidden;
+	overflow-x: auto;
+	position: absolute;
+}
+
+body > header {
+	width: 100%;
+	padding: 0.625em;
+	text-align: right;
+	box-sizing: border-box;
+	background: #EEEEEE;
+	position: fixed;
+}
+
+body > header span {
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+body > header button {
+	border: 0;
+	background: #008b8b;
+	color: #FFFFFF;
+	padding: 0.625em;
+	margin-left: 0.4em;
+	border-radius: 0.5em;
+}
+
+.wrapper {
+	margin-top: 47px;
+	padding: 0.5em;
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	white-space: nowrap;
+  	overflow-x: auto;
+  	overflow-y: hidden;
+}
+
+.wrapper section {
+	text-align: center;
+	width: 250px;
+	display: inline-block;
+	background: #eeeeee;
+	border-radius: 4px;
+	vertical-align: top;
+	margin: 0 0.5em;
+}
+.wrapper section header {
+	padding: 0.5em;
+	box-sizing: border-box;
+}
+.wrapper section header span {
+	font-size: 16px;
+	font-weight: 800;
+	color: #555555;
+}
+
+div.tasks ul.tasks-ul {
+	padding: 0;
+	width: 90%;
+	margin: 0 auto;
+}
+div.tasks ul.tasks-ul li {
+	list-style-type: none;
+	padding: 0.6em;
+	margin-bottom: 1em;
+	background: #FFFFFF;
+	text-align: left;
+}
+div.add-task {
+	width: 90%;
+	margin: 0 auto 0.6em;
+	padding: 0.6em 0;
+	white-space: initial;
+	display: block;
+	background: #dddddd;
+}
+div.add-task input {
+	width: 95%;
+	padding: 0;
+	box-shadow: none;
+	border:0;
+	height: 30px;
+}
+div.add-task input:focus {
+	outline: none;
+}
+div.add-task span {
+	margin-top: 5px;
+	width: 100%;
+	display: inline-block;
+	text-align: right !important;
+}
+div.add-task span button {
+	padding: 0.375em;
+	margin-right: 5px;
+	border: 0;
+	background: #008b8b;
+	color: #FFFFFF;
+	border-radius: 0.5em;
+}
