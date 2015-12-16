@@ -72,6 +72,8 @@ div.tasks ul.tasks-ul {
 	padding: 0;
 	width: 90%;
 	margin: 0 auto;
+	max-height: 400px;
+	overflow-y: scroll;
 }
 div.tasks ul.tasks-ul li {
 	list-style-type: none;
