@@ -112,14 +112,13 @@ $(document).ready(function(){
 			if(items[i].id == statusid) {
 				for(var j = 0; j < items[i].tasks.length; j++) {
 					if(items[i].tasks[j].id == id) {
-						console.log('i '+i+' j '+j);
 						items[i].tasks.splice(j, 1);
 						break;
 					}
 				}
 			}
 		}
-		console.log(items);
+		$("#task-"+id).remove();
 		localStorage.setItem("items", JSON.stringify(items));
 	})
 });
@@ -190,9 +189,7 @@ function handleDragEnter(ev) {
 }
 
 function handleDragOver(ev) {
-	if (globalDraggedElement != this) {
-		ev.preventDefault();
-	}
+	
 }
 
 function handleDragLeave(ev) {
@@ -204,9 +201,17 @@ function handleDragEnd(ev) {
 	// document.body.style.cursor = "auto"; Didn't work
 }
 
-function handleDragDrop(ev) {
+function handleDragDrop(ev, id) {
+	ev.preventDefault();
+	var data = ev.dataTransfer.getData('text');
+	console.log(data);
 }
 
+function dropDelete(ev) {
+	ev.preventDefault();
+	var data = ev.dataTransfer.getData('text');
+	console.log(data);
+}
 function createItems() {
 	var items = JSON.parse(localStorage.getItem('items'));
 	//Sorting According to the array
