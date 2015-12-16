@@ -122,7 +122,7 @@ $(window).on("saveTask", function(event, element){
 			break;
 		}
 	}
-	var newHTML = '<li class="task" draggable="true">'+element.value+'</li>';
+	var newHTML = '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.value+'</span><span class="task-action"><button class="fa fa-times" data-id='+element.id+'></button></span></li>';
 	$('#'+id+' div.tasks ul.tasks-ul').append(newHTML);
 	localStorage.setItem('items', JSON.stringify(items));
 	element.value = '';
@@ -185,7 +185,7 @@ function createItems() {
 			return a.position - b.position;
 		})
 		elements.tasks.forEach(function(element){
-			newHtml = newHtml + '<li class="task" draggable="true">'+element.name+'</li>';
+			newHtml = newHtml + '<li id="task-'+element.id+'" class="task" draggable="true"><span>'+element.name+'</span><span class="task-action"><button class="fa fa-times" data-id='+element.id+'></button></span></li>';
 		});
 		newHtml = newHtml + '</ul></div>';
 		newHtml = newHtml + '<div class="add-task"><input data-id='+elements.id+' type="text" /><span><button data-id='+elements.id+'>add task</button></span></div></section>';

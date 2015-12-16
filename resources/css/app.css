@@ -81,6 +81,15 @@ div.tasks ul.tasks-ul li {
 	text-align: left;
 	box-shadow: 1px 1px 5px #dddddd;
 }
+div.tasks ul.tasks-ul li span {
+	display: block;
+}
+div.tasks ul.tasks-ul li span.task-action {
+	margin-top: 10px;
+	padding-top: 0.5em;
+	border-top: 1px dashed #000;
+	text-align: right;
+}
 div.add-task {
 	width: 90%;
 	margin: 0 auto 0.6em;
